@@ -1,3 +1,0 @@
-/mnt/c/ITMO/isrpo-4/build/CMakeFiles/test_calculator.dir
-/mnt/c/ITMO/isrpo-4/build/CMakeFiles/edit_cache.dir
-/mnt/c/ITMO/isrpo-4/build/CMakeFiles/rebuild_cache.dir
