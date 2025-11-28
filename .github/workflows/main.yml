@@ -16,15 +16,6 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Install dependencies (Linux)
-      if: runner.os == 'Linux'
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y cmake libgtest-dev
-        sudo cmake /usr/src/gtest
-        sudo make -C /usr/src/gtest
-        sudo cp /usr/src/gtest/*.a /usr/lib/
-
     - name: Install CMake (Windows)
       if: runner.os == 'Windows'
       uses: lukka/get-cmake@latest
@@ -37,8 +28,22 @@ jobs:
 
     - name: Run tests (Linux)
       if: runner.os == 'Linux'
-      run: ./build/test_calculator
+      run: |
+        if [ -f ./build/test_calculator ]; then
+          ./build/test_calculator;
+        elif [ -f ./build/Release/test_calculator ]; then
+          ./build/Release/test_calculator;
+        else
+          ./build/Debug/test_calculator;
+        fi
 
     - name: Run tests (Windows)
       if: runner.os == 'Windows'
-      run: .\build\Release\test_calculator.exe
+      run: |
+        if (Test-Path "build\Release\test_calculator.exe") {
+          build\Release\test_calculator.exe
+        } elseif (Test-Path "build\Debug\test_calculator.exe") {
+          build\Debug\test_calculator.exe
+        } else {
+          build\test_calculator.exe
+        }
