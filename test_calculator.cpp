@@ -23,7 +23,7 @@ class CalculatorTest : public ::testing::Test {
 
         void test_divide(){
             calc = Calculator(4.5, 9);
-            ASSERT_DEQ(calc.divide(), 0.5);
+            ASSERT_DOUBLE_EQ(calc.divide(), 0.5);
         }
 
         void test_max(){
