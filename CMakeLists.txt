@@ -15,6 +15,8 @@ set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 
 FetchContent_MakeAvailable(googletest)
 
+find_package(Threads REQUIRED)
+
 add_executable(test_calculator
     test_calculator.cpp
 )
@@ -22,5 +24,5 @@ add_executable(test_calculator
 target_link_libraries(test_calculator
     gtest
     gtest_main
-    pthread
+    Threads::Threads
 )
