@@ -2,48 +2,21 @@ name: C++ GoogleTest CI
 
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: ["master"]
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      matrix:
-        os: [ubuntu-latest, windows-latest]
+    runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    - name: Install CMake (Windows)
-      if: runner.os == 'Windows'
-      uses: lukka/get-cmake@latest
-
     - name: Configure CMake
       run: cmake -S . -B build
 
     - name: Build
-      run: cmake --build build --config Release
+      run: cmake --build build
 
-    - name: Run tests (Linux)
-      if: runner.os == 'Linux'
-      run: |
-        if [ -f ./build/test_calculator ]; then
-          ./build/test_calculator;
-        elif [ -f ./build/Release/test_calculator ]; then
-          ./build/Release/test_calculator;
-        else
-          ./build/Debug/test_calculator;
-        fi
-
-    - name: Run tests (Windows)
-      if: runner.os == 'Windows'
-      run: |
-        if (Test-Path "build\Release\test_calculator.exe") {
-          build\Release\test_calculator.exe
-        } elseif (Test-Path "build\Debug\test_calculator.exe") {
-          build\Debug\test_calculator.exe
-        } else {
-          build\test_calculator.exe
-        }
+    - name: Run tests
+      run: ./build/test_calculator
